@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Heart, RotateCcw, Sparkles, X } from 'lucide-react';
+import { Heart, RotateCcw, Sparkles } from 'lucide-react';
 
 const App = () => {
   const [selectedCard, setSelectedCard] = useState(null);
@@ -31,7 +31,7 @@ const App = () => {
     // Show result after a short delay
     setTimeout(() => {
       setShowResult(true);
-    }, 500);
+    }, 600);
   };
 
   const reset = () => {
@@ -40,115 +40,126 @@ const App = () => {
   };
 
   return (
-    <div className="container">
-      {/* Background Text Layer */}
-      <div className="bg-text-container">
-        {[...Array(8)].map((_, i) => (
+    <div id="root">
+      {/* Background Decorative Layer */}
+      <div className="bg-layer">
+        {[...Array(10)].map((_, i) => (
           <motion.div 
             key={i} 
-            className="bg-text"
-            animate={{ x: i % 2 === 0 ? [-50, 50] : [50, -50] }}
-            transition={{ duration: 20, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
+            className="bg-text-line"
+            animate={{ x: i % 2 === 0 ? [-100, 100] : [100, -100] }}
+            transition={{ duration: 25, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
           >
-            LỜI YÊU EM LỜI YÊU EM
+            LỜI YÊU EM LỜI YÊU EM LỜI YÊU EM
           </motion.div>
         ))}
       </div>
 
-      <div className="header">
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          Bốc Bài Hello Kitty ❤️
-        </motion.h1>
+      <div className="container">
+        <header className="header">
+          <motion.h1
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
+            Bốc Bài Hello Kitty ❤️
+          </motion.h1>
+        </header>
+
+        <main className="card-deck">
+          <AnimatePresence>
+            {!showResult && [0, 1, 2, 3, 4].map((i) => (
+              <motion.div
+                key={i}
+                className="card-item"
+                initial={{ 
+                  rotate: (i - 2) * 12, 
+                  x: (i - 2) * 25,
+                  y: Math.abs(i - 2) * 10,
+                  opacity: 0
+                }}
+                animate={{ 
+                  rotate: selectedCard === i ? 0 : (i - 2) * 12,
+                  x: selectedCard === i ? 0 : (i - 2) * 25,
+                  y: selectedCard === i ? -40 : Math.abs(i - 2) * 10,
+                  opacity: selectedCard === null || selectedCard === i ? 1 : 0,
+                  scale: selectedCard === i ? 1.1 : 1
+                }}
+                exit={{ opacity: 0, scale: 0.5, y: -100 }}
+                onClick={() => handleCardClick(i)}
+                whileHover={selectedCard === null ? { y: -15, scale: 1.05 } : {}}
+                transition={{ type: "spring", stiffness: 100, damping: 15 }}
+              >
+                <div className="card-face" />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </main>
+
+        {!selectedCard && (
+          <motion.footer 
+            className="instruction"
+            animate={{ opacity: [0.3, 1, 0.3] }}
+            transition={{ repeat: Infinity, duration: 2.5 }}
+          >
+            CHỌN MỘT LÁ BÀI...
+          </motion.footer>
+        )}
       </div>
 
-      <div className="card-deck">
-        <AnimatePresence>
-          {!showResult && [0, 1, 2, 3, 4].map((i) => (
-            <motion.div
-              key={i}
-              className="card-item"
-              initial={{ 
-                rotate: (i - 2) * 12, 
-                x: (i - 2) * 30,
-                y: Math.abs(i - 2) * 10,
-                opacity: 0
-              }}
-              animate={{ 
-                rotate: selectedCard === i ? 0 : (i - 2) * 12,
-                x: selectedCard === i ? 0 : (i - 2) * 30,
-                y: selectedCard === i ? -20 : Math.abs(i - 2) * 10,
-                opacity: selectedCard === null || selectedCard === i ? 1 : 0,
-                scale: selectedCard === i ? 1.1 : 1
-              }}
-              exit={{ opacity: 0, scale: 0.8, y: -100 }}
-              onClick={() => handleCardClick(i)}
-              whileHover={selectedCard === null ? { y: -15, scale: 1.05 } : {}}
-              transition={{ type: "spring", stiffness: 120, damping: 20 }}
-            >
-              <div className="card-face card-back" />
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
-
-      {!selectedCard && (
-        <motion.div 
-          className="instruction"
-          animate={{ opacity: [0.4, 1, 0.4] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-        >
-          CHỌN MỘT LÁ BÀI...
-        </motion.div>
-      )}
-
-      {/* Result Modal */}
+      {/* Full Screen Result Overlay */}
       <AnimatePresence>
         {showResult && (
           <motion.div 
-            className="result-overlay"
+            className="modal-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <motion.div 
-              className="result-card"
-              initial={{ scale: 0.8, y: 50, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.8, y: 50, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 100, damping: 15 }}
+              className="modal-content"
+              initial={{ scale: 0.9, opacity: 0, y: 30 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 30 }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Heart size={24} color="#ff85a2" fill="#ff85a2" />
-                <Sparkles color="#d4af37" size={20} />
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '5px' }}>
+                <Heart size={28} color="#ff85a2" fill="#ff85a2" />
               </div>
               
-              <div className="result-card-text">
+              <div className="message-scroll">
                 {cardMessages[selectedCard]}
               </div>
-
-              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-                <button className="button-reset" onClick={reset}>
-                  <RotateCcw size={18} />
-                  BỐC LẠI NHÉ
-                </button>
+              
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <Sparkles color="#d4af37" size={20} />
               </div>
+            </motion.div>
+
+            {/* Global Reset Button - Outside the card */}
+            <motion.div 
+              className="reset-btn-container"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+            >
+              <button className="btn-reset" onClick={reset}>
+                <RotateCcw size={20} />
+                BỐC LẠI NHÉ
+              </button>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {[...Array(15)].map((_, i) => (
+      {/* Floating Sparkles */}
+      {[...Array(12)].map((_, i) => (
         <motion.div
           key={i}
           className="sparkle"
-          initial={{ x: Math.random() * 400, y: Math.random() * 800, scale: 0 }}
-          animate={{ scale: [0, 1, 0], y: '-=150' }}
-          transition={{ duration: 4 + Math.random() * 4, repeat: Infinity, delay: Math.random() * 10 }}
+          initial={{ x: Math.random() * 500, y: Math.random() * 900, scale: 0 }}
+          animate={{ scale: [0, 1, 0], y: '-=100' }}
+          transition={{ duration: 4 + Math.random() * 3, repeat: Infinity, delay: Math.random() * 5 }}
         >
-          <Heart size={14} fill="white" opacity={0.15} />
+          <Heart size={10} fill="white" opacity={0.1} />
         </motion.div>
       ))}
     </div>
