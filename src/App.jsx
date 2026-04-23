@@ -83,13 +83,15 @@ const App = () => {
                   rotate: isThisSelected ? 0 : (i - 2) * 12,
                   x: isThisSelected ? 0 : (i - 2) * 35,
                   y: isThisSelected ? 0 : Math.abs(i - 2) * 10,
-                  scale: isThisSelected ? (isFlipped ? 1.5 : 1.3) : 1,
+                  scale: isThisSelected ? (isFlipped ? 1.4 : 1.2) : 1,
                   opacity: 1,
                   rotateY: isThisSelected && isFlipped ? 180 : 0,
                   zIndex: isThisSelected ? 100 : 10,
                   position: isThisSelected && isFlipped ? 'fixed' : 'absolute',
-                  top: isThisSelected && isFlipped ? '15%' : 'auto',
+                  top: isThisSelected && isFlipped ? '50%' : 'auto',
                   left: isThisSelected && isFlipped ? '50%' : 'auto',
+                  // Using translate via transform handled by framer-motion's x/y
+                  marginTop: isThisSelected && isFlipped ? '-160px' : '0', // Half of height
                   marginLeft: isThisSelected && isFlipped ? '-100px' : '0', // Half of width
                 }}
                 exit={{ opacity: 0, scale: 0.5 }}
