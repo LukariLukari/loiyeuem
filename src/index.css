@@ -107,13 +107,14 @@ body {
 }
 
 .card-front-text {
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 0.75rem; /* Smaller but more readable with landscape */
+  font-weight: 400; /* Thin/Regular as requested */
   line-height: 1.6;
-  color: #5d4037;
+  color: #4a4a4a;
   max-height: 100%;
   overflow-y: auto;
-  padding-right: 5px;
+  padding: 0 5px;
+  text-align: left; /* Better for long text */
 }
 
 /* Custom Scrollbar for Card Text */

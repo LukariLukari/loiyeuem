@@ -79,11 +79,11 @@ const App = () => {
                   y: Math.abs(i - 2) * 10,
                   opacity: 0
                 }}
-                animate={{
-                  rotate: isThisSelected ? 0 : (i - 2) * 12,
+                animate={{ 
+                  rotate: isThisSelected ? (isFlipped ? 90 : 0) : (i - 2) * 12,
                   x: isThisSelected ? 0 : (i - 2) * 35,
                   y: isThisSelected ? 0 : Math.abs(i - 2) * 10,
-                  scale: isThisSelected ? 1.3 : 1,
+                  scale: isThisSelected ? (isFlipped ? 1.6 : 1.3) : 1,
                   opacity: 1,
                   rotateY: isThisSelected && isFlipped ? 180 : 0
                 }}
