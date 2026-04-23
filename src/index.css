@@ -3,7 +3,6 @@
   --accent: #ff85a2;
   --bg: #bc7c86;
   --text: #ffffff;
-  --font-title: 'Chonburi', cursive; /* Madison Alternative */
   --font-main: 'Montserrat', sans-serif;
 }
 
@@ -50,17 +49,19 @@ body {
 }
 
 .bg-text {
-  font-family: var(--font-title);
+  font-family: var(--font-main);
   font-size: 8vh;
+  font-weight: 900;
   color: #fff;
   white-space: nowrap;
+  letter-spacing: -2px;
 }
 
 /* Card Deck Section */
 .card-deck {
   position: relative;
   width: 100%;
-  height: 350px;
+  height: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,10 +71,11 @@ body {
 
 .card-item {
   position: absolute;
-  width: 180px;
-  height: 320px; /* Slightly taller for the provided image ratio */
+  width: 160px;
+  height: 240px;
   cursor: pointer;
   transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-face {
@@ -82,7 +84,7 @@ body {
   height: 100%;
   backface-visibility: hidden;
   border-radius: 12px;
-  box-shadow: 0 15px 45px rgba(0,0,0,0.3);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   overflow: hidden;
 }
 
@@ -90,7 +92,7 @@ body {
   background-image: url('/hello-kitty-card.png');
   background-size: cover;
   background-position: center;
-  border: none; /* No border as requested */
+  border: none;
 }
 
 .card-front {
@@ -101,16 +103,16 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 30px;
+  padding: 20px;
   text-align: center;
-  border: none; /* No border as requested */
+  border: none;
 }
 
 .card-front-text {
   font-family: var(--font-main);
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  line-height: 1.5;
+  line-height: 1.4;
   color: #5d4037;
 }
 
@@ -122,8 +124,9 @@ body {
 }
 
 .header h1 {
-  font-family: var(--font-title);
-  font-size: 2.2rem;
+  font-family: var(--font-main);
+  font-size: 1.8rem;
+  font-weight: 900;
   color: white;
   letter-spacing: 1px;
 }
@@ -131,16 +134,16 @@ body {
 .instruction {
   margin-top: 30px;
   font-family: var(--font-main);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 4px;
-  opacity: 0.7;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  opacity: 0.8;
   z-index: 10;
 }
 
 .button-reset {
   margin-top: 30px;
-  background: #fffdf9;
+  background: white;
   border: none;
   color: #8b3d4a;
   padding: 12px 25px;
@@ -155,8 +158,30 @@ body {
   z-index: 20;
 }
 
-/* Decorations */
-.sparkle {
-  position: absolute;
-  pointer-events: none;
+/* Modal for Final Message */
+.final-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(139, 61, 74, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 30px;
+}
+
+.final-content {
+  text-align: center;
+  background: white;
+  padding: 40px;
+  border-radius: 30px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+}
+
+.final-text {
+  font-family: var(--font-main);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #8b3d4a;
+  margin: 20px 0;
 }
