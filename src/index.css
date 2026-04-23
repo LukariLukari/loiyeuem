@@ -71,7 +71,7 @@ body {
 .card-item {
   position: absolute;
   width: 180px;
-  height: 300px;
+  height: 270px;
   cursor: pointer;
   transform-style: preserve-3d;
   z-index: 10;
@@ -112,14 +112,14 @@ body {
 }
 
 .card-front-text {
-  font-size: 0.85rem;
-  font-weight: 300; /* Extra thin as requested */
-  line-height: 1.6;
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.8;
   color: #4a4a4a;
-  max-height: 100%;
+  height: 100%;
   overflow-y: auto;
-  padding: 0 10px;
-  text-align: justify; /* Better for long letters */
+  padding: 20px;
+  text-align: left;
 }
 
 /* Custom Scrollbar for Card Text */

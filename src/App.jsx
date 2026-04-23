@@ -79,13 +79,16 @@ const App = () => {
                   y: Math.abs(i - 2) * 10,
                   opacity: 0
                 }}
+                layout
                 animate={{ 
                   rotate: isThisSelected ? 0 : (i - 2) * 12,
                   x: isThisSelected ? 0 : (i - 2) * 35,
                   y: isThisSelected ? 0 : Math.abs(i - 2) * 10,
-                  scale: isThisSelected ? (isFlipped ? 2.2 : 1.3) : 1,
+                  width: isThisSelected && isFlipped ? '90vw' : 180,
+                  height: isThisSelected && isFlipped ? '80vh' : 270,
                   opacity: 1,
-                  rotateY: isThisSelected && isFlipped ? 180 : 0
+                  rotateY: isThisSelected && isFlipped ? 180 : 0,
+                  zIndex: isThisSelected ? 100 : 10
                 }}
                 exit={{ opacity: 0, scale: 0.5 }}
                 onClick={() => handleCardClick(i)}
