@@ -8,16 +8,16 @@ const App = () => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const cardMessages = [
-    "Càng bên em, anh càng thấy mình là người may mắn nhất thế gian. ❤️",
-    "Mọi con đường anh đi đều muốn có em sánh bước cùng. 🌸",
-    "Em là lý do để mỗi sáng anh thức dậy với một nụ cười. ✨",
-    "Trái tim anh chỉ có một ngăn, và nó đã dành trọn cho em rồi. 🌹",
-    "Yêu em không chỉ là lời nói, mà là từng hơi thở của anh. 💖"
+    "Em nhỏ ơi, đã 2 sinh nhật của em trôi qua rùi, anh chưa từng nghĩ anh có thể đi with một ai lâu đến thế. Mọi thứ đến with anh thật nhanh, ngay khi anh chưa quá hoàn thiện để trở thành một người yêu hoàn hảo, anh có những vấn đề, những sự vụn về khi yêu em, cảm ơn em đã đến bên anh, yêu thương anh, quan tâm anh như một gia đình mà chẳng đòi hỏi bất cứ điều gì, điều tuyệt vời nhất trên đời là sự đồng hành, em đã cho anh điều tưởng chừng nhỏ bé ấy nhưng nó thật sự rất lớn lao và khó có ai làm được.",
+    "Thật sự nhưng gì em trao cho anh, em cứ nghĩ phải đong đếm bằng tiền bạc hay vật chất thì hong phải đâu. Những lúc cảm xúc của em biến sắc khi thấy anh đau, anh có chuyện, hay lúc em giật mình vì call mà anh đang lái xe, lời quan tâm, yêu thương sợ anh bị này bị kia, lời động viên, khen ngợi, những cái mếu, cái hun bòa qua cam, những lúc em khóc nhè mè nheo with anh và vô vàn điều khác những, chúng mới là những điều đáng quý. Bộ one piece sẽ rất tầm thường nếu anh đi mua nhưng khi em mua, em chăm chút, lựa từng cuốn 1 cho anh đấy mới là dáng vẻ đáng trân trọng nhất của em.",
+    "Em bé của anh là cô bé giỏi giang nhất trên đời này, chẳng có ai so sánh được with em cả, em nghị lực trong chính môi trường của mình, em có vấn đề gì em luôn tự mình đứng dậy hoặc khóc nhè with anh rồi nỗ lực vượt qua nó, chứ không nằm 1 chỗ mà than thân trách phận đấy mới là cái mà một con người thành công cần có babi ạ",
+    "Anh thương em",
+    "Anh nhớ em nhiều lắm, anh ở đâu anh cũng nhớ tới em hức, mấy hôm em bận em stress anh vừa xót lại vừa nhớ em, anh thấy mình bình yên thế thui chứ không có em anh không chịu được mất, anh viết dòng này mà mắt anh rơm rớm luôn, anh thương nhớ em quá đi mất, ôm em thơm quá, xinh yêu nằm gọn trong lòng anh anh nhớ em quá huhuhuhuuhhu"
   ];
 
   const handleCardClick = (index) => {
     if (selectedCard !== null) return;
-    
+
     setSelectedCard(index);
     setTimeout(() => {
       setIsFlipped(true);
@@ -40,8 +40,8 @@ const App = () => {
       {/* Background Text Layer */}
       <div className="bg-text-container">
         {[...Array(6)].map((_, i) => (
-          <motion.div 
-            key={i} 
+          <motion.div
+            key={i}
             className="bg-text"
             animate={{ x: i % 2 === 0 ? [-30, 30] : [30, -30] }}
             transition={{ duration: 15, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
@@ -73,13 +73,13 @@ const App = () => {
                 key={i}
                 className="card-item"
                 layoutId={`card-${i}`}
-                initial={{ 
-                  rotate: (i - 2) * 12, 
+                initial={{
+                  rotate: (i - 2) * 12,
                   x: (i - 2) * 35,
                   y: Math.abs(i - 2) * 10,
                   opacity: 0
                 }}
-                animate={{ 
+                animate={{
                   rotate: isThisSelected ? 0 : (i - 2) * 12,
                   x: isThisSelected ? 0 : (i - 2) * 35,
                   y: isThisSelected ? 0 : Math.abs(i - 2) * 10,
@@ -109,7 +109,7 @@ const App = () => {
       </div>
 
       {!selectedCard && (
-        <motion.div 
+        <motion.div
           className="instruction"
           animate={{ opacity: [0.3, 1, 0.3] }}
           transition={{ repeat: Infinity, duration: 2 }}
