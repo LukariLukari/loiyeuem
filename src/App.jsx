@@ -83,10 +83,14 @@ const App = () => {
                   rotate: isThisSelected ? 0 : (i - 2) * 12,
                   x: isThisSelected ? 0 : (i - 2) * 35,
                   y: isThisSelected ? 0 : Math.abs(i - 2) * 10,
-                  scale: isThisSelected ? (isFlipped ? 1.6 : 1.3) : 1,
+                  scale: isThisSelected ? (isFlipped ? 1.5 : 1.3) : 1,
                   opacity: 1,
                   rotateY: isThisSelected && isFlipped ? 180 : 0,
-                  zIndex: isThisSelected ? 100 : 10
+                  zIndex: isThisSelected ? 100 : 10,
+                  position: isThisSelected && isFlipped ? 'fixed' : 'absolute',
+                  top: isThisSelected && isFlipped ? '15%' : 'auto',
+                  left: isThisSelected && isFlipped ? '50%' : 'auto',
+                  marginLeft: isThisSelected && isFlipped ? '-100px' : '0', // Half of width
                 }}
                 exit={{ opacity: 0, scale: 0.5 }}
                 onClick={() => handleCardClick(i)}
@@ -120,15 +124,16 @@ const App = () => {
       )}
 
       {isFlipped && (
-        <motion.button
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          className="button-reset"
-          onClick={reset}
+        <motion.div
+          className="bottom-controls"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
         >
-          <RotateCcw size={18} />
-          BỐC LẠI NHÉ
-        </motion.button>
+          <button className="button-reset" onClick={reset}>
+            <RotateCcw size={18} />
+            BỐC LẠI NHÉ
+          </button>
+        </motion.div>
       )}
 
       {[...Array(10)].map((_, i) => (
