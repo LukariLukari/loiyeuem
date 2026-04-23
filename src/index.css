@@ -1,0 +1,195 @@
+:root {
+  --primary: #ff6b6b;
+  --secondary: #ff9f43;
+  --bg: #fff5f5;
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --text: #2d3436;
+  --font-main: 'Outfit', sans-serif;
+  --font-accent: 'Dancing Script', cursive;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  background: var(--bg);
+  background: radial-gradient(circle at center, #fff0f0 0%, #ffe0e0 100%);
+  color: var(--text);
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Blind Box Styling */
+.blind-box-container {
+  position: relative;
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+.blind-box {
+  width: 250px;
+  height: auto;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.blind-box:hover {
+  transform: scale(1.05);
+}
+
+/* Seal Ripping Effect */
+.seal-strip {
+  position: absolute;
+  top: 40%;
+  left: -10%;
+  width: 120%;
+  height: 40px;
+  background: #ff4757;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  z-index: 10;
+  overflow: hidden;
+}
+
+.seal-strip::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(255,255,255,0.1) 10px,
+    rgba(255,255,255,0.1) 20px
+  );
+}
+
+/* Hello Kitty Selection */
+.kitty-selection {
+  display: flex;
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.kitty-card {
+  position: relative;
+  width: 160px;
+  height: 200px;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.15);
+  transition: all 0.3s ease;
+}
+
+.kitty-card:hover {
+  transform: translateY(-10px) rotate(2deg);
+  border-color: var(--primary);
+  box-shadow: 0 15px 40px rgba(255, 107, 107, 0.25);
+}
+
+.kitty-img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+/* Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background: white;
+  padding: 40px;
+  border-radius: 30px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.message-text {
+  font-family: var(--font-accent);
+  font-size: 1.8rem;
+  color: var(--primary);
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.close-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 20px;
+  font-family: var(--font-main);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.close-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Floating Hearts Animation */
+.floating-heart {
+  position: absolute;
+  color: var(--primary);
+  opacity: 0.6;
+  pointer-events: none;
+}
