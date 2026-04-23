@@ -81,18 +81,17 @@ const App = () => {
                 }}
                 animate={{ 
                   rotate: isThisSelected ? 0 : (i - 2) * 12,
-                  x: isThisSelected ? 0 : (i - 2) * 35,
-                  y: isThisSelected ? 0 : Math.abs(i - 2) * 10,
-                  scale: isThisSelected ? (isFlipped ? 1.4 : 1.2) : 1,
+                  x: isThisSelected ? 0 : (i - 2) * 28, // Reduced spread
+                  y: isThisSelected ? 0 : Math.abs(i - 2) * 8,
+                  scale: isThisSelected ? (isFlipped ? 1.3 : 1.1) : 1,
                   opacity: 1,
                   rotateY: isThisSelected && isFlipped ? 180 : 0,
                   zIndex: isThisSelected ? 100 : 10,
                   position: isThisSelected && isFlipped ? 'fixed' : 'absolute',
                   top: isThisSelected && isFlipped ? '50%' : 'auto',
                   left: isThisSelected && isFlipped ? '50%' : 'auto',
-                  // Using translate via transform handled by framer-motion's x/y
-                  marginTop: isThisSelected && isFlipped ? '-160px' : '0', // Half of height
-                  marginLeft: isThisSelected && isFlipped ? '-100px' : '0', // Half of width
+                  marginTop: isThisSelected && isFlipped ? '-120px' : '0', // Half of 240
+                  marginLeft: isThisSelected && isFlipped ? '-75px' : '0', // Half of 150
                 }}
                 exit={{ opacity: 0, scale: 0.5 }}
                 onClick={() => handleCardClick(i)}
