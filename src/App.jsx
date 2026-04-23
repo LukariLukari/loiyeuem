@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Heart, Sparkles, RotateCcw } from 'lucide-react';
+import { Heart, Stars, RotateCcw } from 'lucide-react';
 
 const App = () => {
   const [selectedCard, setSelectedCard] = useState(null);
@@ -22,7 +22,7 @@ const App = () => {
     setTimeout(() => {
       setIsFlipped(true);
       confetti({
-        particleCount: 100,
+        particleCount: 120,
         spread: 70,
         origin: { y: 0.6 },
         colors: ['#ff85a2', '#ffffff', '#bc7c86']
@@ -37,13 +37,13 @@ const App = () => {
 
   return (
     <div className="container">
-      {/* Background Text */}
+      {/* Background Text Layer */}
       <div className="bg-text-container">
         {[...Array(6)].map((_, i) => (
           <motion.div 
             key={i} 
             className="bg-text"
-            animate={{ x: i % 2 === 0 ? [-50, 50] : [50, -50] }}
+            animate={{ x: i % 2 === 0 ? [-30, 30] : [30, -30] }}
             transition={{ duration: 15, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
           >
             LỜI YÊU EM
@@ -55,8 +55,9 @@ const App = () => {
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
+          style={{ fontFamily: 'Dancing Script' }}
         >
-          Bốc Bài Tình Yêu ❤️
+          Bốc Bài Hello Kitty ❤️
         </motion.h1>
       </div>
 
@@ -74,34 +75,34 @@ const App = () => {
                 className="card-item"
                 layoutId={`card-${i}`}
                 initial={{ 
-                  rotate: (i - 2) * 15, 
-                  x: (i - 2) * 40,
-                  y: Math.abs(i - 2) * 10,
+                  rotate: (i - 2) * 12, 
+                  x: (i - 2) * 35,
+                  y: Math.abs(i - 2) * 8,
                   opacity: 0
                 }}
                 animate={{ 
-                  rotate: isThisSelected ? 0 : (i - 2) * 15,
-                  x: isThisSelected ? 0 : (i - 2) * 40,
-                  y: isThisSelected ? 0 : Math.abs(i - 2) * 10,
-                  scale: isThisSelected ? 1.2 : 1,
+                  rotate: isThisSelected ? 0 : (i - 2) * 12,
+                  x: isThisSelected ? 0 : (i - 2) * 35,
+                  y: isThisSelected ? 0 : Math.abs(i - 2) * 8,
+                  scale: isThisSelected ? 1.3 : 1,
                   opacity: 1,
                   rotateY: isThisSelected && isFlipped ? 180 : 0
                 }}
-                exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+                exit={{ opacity: 0, scale: 0.5 }}
                 onClick={() => handleCardClick(i)}
-                whileHover={!isAnySelected ? { y: -20, transition: { duration: 0.2 } } : {}}
+                whileHover={!isAnySelected ? { y: -20, scale: 1.05 } : {}}
               >
-                {/* Back Face */}
+                {/* Back Face - Hello Kitty Design */}
                 <div className="card-face card-back" />
                 
-                {/* Front Face */}
+                {/* Front Face - Message */}
                 <div className="card-face card-front">
                   <div className="card-front-content">
-                    <Heart size={48} color="#bc7c86" fill="#bc7c86" />
+                    <Heart size={32} color="#ff85a2" fill="#ff85a2" />
                     <p className="card-front-text">
                       {cardMessages[i]}
                     </p>
-                    <Sparkles color="#ff85a2" />
+                    <Stars color="#ffca28" fill="#ffca28" size={24} />
                   </div>
                 </div>
               </motion.div>
@@ -113,27 +114,27 @@ const App = () => {
       {!selectedCard && (
         <motion.div 
           className="instruction"
-          animate={{ opacity: [0.4, 1, 0.4] }}
+          animate={{ opacity: [0.3, 1, 0.3] }}
           transition={{ repeat: Infinity, duration: 2 }}
         >
-          CHỌN MỘT LÁ BÀI BẤT KỲ...
+          CHỌN MỘT LÁ BÀI...
         </motion.div>
       )}
 
       {isFlipped && (
         <motion.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
           className="button-reset"
           onClick={reset}
         >
-          <RotateCcw size={18} style={{ verticalAlign: 'middle', marginRight: '5px' }} />
-          Bốc lại nhé
+          <RotateCcw size={18} />
+          Bốc lá khác nhé
         </motion.button>
       )}
 
-      {/* Floating Elements */}
-      {[...Array(15)].map((_, i) => (
+      {/* Floating Hearts */}
+      {[...Array(12)].map((_, i) => (
         <motion.div
           key={i}
           className="sparkle"
@@ -147,12 +148,12 @@ const App = () => {
             y: '-=100'
           }}
           transition={{ 
-            duration: 2 + Math.random() * 3,
+            duration: 3 + Math.random() * 3,
             repeat: Infinity,
             delay: Math.random() * 5
           }}
         >
-          <Heart size={Math.random() * 10 + 10} fill="white" opacity={0.3} />
+          <Heart size={Math.random() * 12 + 8} fill="white" opacity={0.2} />
         </motion.div>
       ))}
     </div>
