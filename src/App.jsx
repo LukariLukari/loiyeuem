@@ -1,176 +1,160 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Heart, MousePointer2, RefreshCw, Star } from 'lucide-react';
+import { Heart, Sparkles, RotateCcw } from 'lucide-react';
 
 const App = () => {
-  const [phase, setPhase] = useState('start'); // start, pulling, capsule, choice, result
-  const [selected, setSelected] = useState(null);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [isFlipped, setIsFlipped] = useState(false);
 
-  const data = {
-    1: "Bé Classic: 'Em là mảnh ghép hoàn hảo nhất trong trái tim anh.' ❤️",
-    2: "Bé Flower: 'Cảm ơn em đã rực rỡ như một đóa hoa trong đời anh.' 🌸"
+  const cardMessages = [
+    "Càng bên em, anh càng thấy mình là người may mắn nhất thế gian. ❤️",
+    "Mọi con đường anh đi đều muốn có em sánh bước cùng. 🌸",
+    "Em là lý do để mỗi sáng anh thức dậy với một nụ cười. ✨",
+    "Trái tim anh chỉ có một ngăn, và nó đã dành trọn cho em rồi. 🌹",
+    "Yêu em không chỉ là lời nói, mà là từng hơi thở của anh. 💖"
+  ];
+
+  const handleCardClick = (index) => {
+    if (selectedCard !== null) return;
+    
+    setSelectedCard(index);
+    setTimeout(() => {
+      setIsFlipped(true);
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#ff85a2', '#ffffff', '#bc7c86']
+      });
+    }, 600);
   };
 
-  const onPull = () => {
-    if (phase !== 'start') return;
-    
-    setPhase('pulling');
-    
-    // Shake and Lever motion
-    setTimeout(() => {
-      setPhase('capsule');
-    }, 1000);
-
-    // Show selection after capsule "rolls out"
-    setTimeout(() => {
-      confetti({
-        particleCount: 150,
-        spread: 70,
-        origin: { y: 0.7 }
-      });
-      setPhase('choice');
-    }, 2500);
+  const reset = () => {
+    setSelectedCard(null);
+    setIsFlipped(false);
   };
 
   return (
     <div className="container">
-      {/* Background Text Layer */}
+      {/* Background Text */}
       <div className="bg-text-container">
         {[...Array(6)].map((_, i) => (
           <motion.div 
             key={i} 
             className="bg-text"
             animate={{ x: i % 2 === 0 ? [-50, 50] : [50, -50] }}
-            transition={{ duration: 10, repeat: Infinity, repeatType: "reverse" }}
+            transition={{ duration: 15, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
           >
             LỜI YÊU EM
           </motion.div>
         ))}
       </div>
 
-      <AnimatePresence mode="wait">
-        {(phase === 'start' || phase === 'pulling' || phase === 'capsule') && (
-          <motion.div 
-            key="gacha-view"
-            className="gacha-wrapper"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ 
-              opacity: 1, 
-              scale: 1,
-              x: phase === 'pulling' ? [-2, 2, -2, 2, 0] : 0,
-              y: phase === 'pulling' ? [-1, 1, -1, 1, 0] : 0
-            }}
-            exit={{ opacity: 0, scale: 1.1, filter: 'blur(10px)' }}
-          >
-            <div style={{ marginBottom: '30px', textAlign: 'center' }}>
-              <motion.h1 
-                style={{ fontFamily: 'Dancing Script', color: '#ff85a2', fontSize: '2.5rem' }}
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ repeat: Infinity, duration: 2 }}
-              >
-                Gacha Tình Yêu ✨
-              </motion.h1>
-            </div>
+      <div className="header">
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          Bốc Bài Tình Yêu ❤️
+        </motion.h1>
+      </div>
 
-            <div className="machine-body">
-              <img src="/gacha-machine.png" alt="Machine" className="machine-img" />
-              
-              {/* INTERACTIVE LEVER */}
-              <motion.div 
-                className="lever-visual"
-                onClick={onPull}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9, y: 20 }}
+      <div className="card-deck">
+        <AnimatePresence>
+          {[0, 1, 2, 3, 4].map((i) => {
+            const isThisSelected = selectedCard === i;
+            const isAnySelected = selectedCard !== null;
+
+            if (isAnySelected && !isThisSelected) return null;
+
+            return (
+              <motion.div
+                key={i}
+                className="card-item"
+                layoutId={`card-${i}`}
+                initial={{ 
+                  rotate: (i - 2) * 15, 
+                  x: (i - 2) * 40,
+                  y: Math.abs(i - 2) * 10,
+                  opacity: 0
+                }}
                 animate={{ 
-                  y: phase === 'pulling' ? [0, 30, 0] : 0,
-                  boxShadow: phase === 'start' ? ["0 0 10px rgba(212,175,55,0.4)", "0 0 30px rgba(212,175,55,0.8)", "0 0 10px rgba(212,175,55,0.4)"] : "0 0 10px rgba(212,175,55,0.4)"
+                  rotate: isThisSelected ? 0 : (i - 2) * 15,
+                  x: isThisSelected ? 0 : (i - 2) * 40,
+                  y: isThisSelected ? 0 : Math.abs(i - 2) * 10,
+                  scale: isThisSelected ? 1.2 : 1,
+                  opacity: 1,
+                  rotateY: isThisSelected && isFlipped ? 180 : 0
                 }}
-                transition={{ duration: phase === 'pulling' ? 0.5 : 1.5, repeat: phase === 'start' ? Infinity : 0 }}
+                exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+                onClick={() => handleCardClick(i)}
+                whileHover={!isAnySelected ? { y: -20, transition: { duration: 0.2 } } : {}}
               >
-                <div className="lever-handle" />
-                {phase === 'start' && (
-                  <div className="click-indicator">
-                    <MousePointer2 size={32} />
+                {/* Back Face */}
+                <div className="card-face card-back" />
+                
+                {/* Front Face */}
+                <div className="card-face card-front">
+                  <div className="card-front-content">
+                    <Heart size={48} color="#bc7c86" fill="#bc7c86" />
+                    <p className="card-front-text">
+                      {cardMessages[i]}
+                    </p>
+                    <Sparkles color="#ff85a2" />
                   </div>
-                )}
+                </div>
               </motion.div>
+            );
+          })}
+        </AnimatePresence>
+      </div>
 
-              {/* CAPSULE DROP */}
-              {phase === 'capsule' && (
-                <motion.div 
-                  className="capsule-out"
-                  initial={{ y: -60, x: 20, opacity: 0 }}
-                  animate={{ 
-                    y: [0, 80],
-                    x: [20, 50],
-                    opacity: 1,
-                    rotate: 720
-                  }}
-                  transition={{ duration: 1, ease: "bounceOut" }}
-                />
-              )}
-            </div>
+      {!selectedCard && (
+        <motion.div 
+          className="instruction"
+          animate={{ opacity: [0.4, 1, 0.4] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+        >
+          CHỌN MỘT LÁ BÀI BẤT KỲ...
+        </motion.div>
+      )}
 
-            <div style={{ marginTop: '40px', color: '#ff85a2', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <Star fill="#ff85a2" size={16} /> GẠT CẦN ĐỂ NHẬN QUÀ <Star fill="#ff85a2" size={16} />
-            </div>
-          </motion.div>
-        )}
+      {isFlipped && (
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="button-reset"
+          onClick={reset}
+        >
+          <RotateCcw size={18} style={{ verticalAlign: 'middle', marginRight: '5px' }} />
+          Bốc lại nhé
+        </motion.button>
+      )}
 
-        {phase === 'choice' && (
-          <motion.div 
-            key="choice-view"
-            className="selection-view"
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <h2 style={{ fontFamily: 'Dancing Script', fontSize: '2.5rem', color: '#ff85a2' }}>Chọn quà của em!</h2>
-            <div className="kitty-grid">
-              <motion.div 
-                className="kitty-card-premium"
-                whileTap={{ scale: 0.95 }}
-                onClick={() => { setSelected(1); setPhase('result'); }}
-              >
-                <img src="/kitty1.png" alt="K1" style={{ width: '80px' }} />
-                <p style={{ marginTop: '10px', color: '#ff85a2', fontWeight: 'bold' }}>Bé Classic</p>
-              </motion.div>
-              <motion.div 
-                className="kitty-card-premium"
-                whileTap={{ scale: 0.95 }}
-                onClick={() => { setSelected(2); setPhase('result'); }}
-              >
-                <img src="/kitty2.png" alt="K2" style={{ width: '80px' }} />
-                <p style={{ marginTop: '10px', color: '#ff85a2', fontWeight: 'bold' }}>Bé Flower</p>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-
-        {phase === 'result' && (
-          <motion.div 
-            key="result-view"
-            className="modal-full"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            <div className="message-box">
-              <Heart size={64} color="#ff85a2" fill="#ff85a2" style={{ margin: '0 auto' }} />
-              <p className="message-text-big">{data[selected]}</p>
-              <button 
-                onClick={() => setPhase('start')}
-                style={{ 
-                  background: '#ff85a2', color: 'white', border: 'none', 
-                  padding: '12px 30px', borderRadius: '30px', fontWeight: 'bold',
-                  display: 'flex', alignItems: 'center', gap: '10px', margin: '0 auto'
-                }}
-              >
-                <RefreshCw size={18} /> Chơi lại lần nữa nhé
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Floating Elements */}
+      {[...Array(15)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="sparkle"
+          initial={{ 
+            x: Math.random() * 400, 
+            y: Math.random() * 800,
+            scale: 0
+          }}
+          animate={{ 
+            scale: [0, 1, 0],
+            y: '-=100'
+          }}
+          transition={{ 
+            duration: 2 + Math.random() * 3,
+            repeat: Infinity,
+            delay: Math.random() * 5
+          }}
+        >
+          <Heart size={Math.random() * 10 + 10} fill="white" opacity={0.3} />
+        </motion.div>
+      ))}
     </div>
   );
 };

@@ -1,9 +1,10 @@
 :root {
-  --primary: #ff85a2;
-  --secondary: #ffd1dc;
-  --gold: #d4af37;
-  --bg: #fffdf9;
-  --text: #4a4a4a;
+  --primary: #9b4d5a;
+  --accent: #ff85a2;
+  --bg: #bc7c86;
+  --text: #ffffff;
+  --font-main: 'Outfit', sans-serif;
+  --font-accent: 'Dancing Script', cursive;
 }
 
 * {
@@ -14,8 +15,10 @@
 }
 
 body {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-main);
   background: var(--bg);
+  background: linear-gradient(135deg, #bc7c86 0%, #8b3d4a 100%);
+  color: var(--text);
   overflow: hidden;
   height: 100dvh;
 }
@@ -30,7 +33,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: radial-gradient(circle at center, #fffdf9 0%, #ffeef2 100%);
+  padding: 20px;
 }
 
 /* Background Scrolling Text */
@@ -41,7 +44,7 @@ body {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  opacity: 0.1;
+  opacity: 0.15;
   z-index: 0;
   pointer-events: none;
 }
@@ -49,135 +52,109 @@ body {
 .bg-text {
   font-size: 10vh;
   font-weight: 900;
-  color: var(--primary);
+  color: #fff;
   white-space: nowrap;
 }
 
-/* Gacha Machine Section */
-.gacha-wrapper {
+/* Card Deck Section */
+.card-deck {
   position: relative;
-  width: 90%;
+  width: 100%;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
   z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
-.machine-body {
-  position: relative;
-  width: 100%;
-}
-
-.machine-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  filter: drop-shadow(0 20px 40px rgba(255, 133, 162, 0.2));
-}
-
-/* THE LEVER - Making it very obvious */
-.lever-visual {
+.card-item {
   position: absolute;
-  right: 6%;
-  bottom: 28%;
-  width: 60px;
-  height: 60px;
-  background: rgba(212, 175, 55, 0.3);
-  border: 3px solid var(--gold);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 200px;
+  height: 300px;
   cursor: pointer;
-  z-index: 20;
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.lever-handle {
-  width: 30px;
-  height: 30px;
-  background: var(--gold);
-  border-radius: 50%;
-  box-shadow: inset -2px -2px 5px rgba(0,0,0,0.2);
-}
-
-.click-indicator {
+.card-face {
   position: absolute;
-  top: -40px;
-  right: -10px;
-  color: var(--gold);
-  animation: bounce 1s infinite;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-/* Capsule Reveal */
-.capsule-out {
-  position: absolute;
-  bottom: 15%;
-  left: 45%;
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(to bottom, #ff85a2 50%, white 50%);
-  border-radius: 50%;
-  border: 2px solid white;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  z-index: 15;
-}
-
-/* Selection Screen */
-.selection-view {
   width: 100%;
-  padding: 20px;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+
+.card-back {
+  background-image: url('/card-back.png');
+  background-size: cover;
+  background-position: center;
+  border: 4px solid #fff;
+}
+
+.card-front {
+  background: #fff;
+  color: var(--primary);
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
   text-align: center;
+  border: 8px solid #fff5f7;
 }
 
-.kitty-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin-top: 30px;
-}
-
-.kitty-card-premium {
-  background: white;
-  border-radius: 25px;
-  padding: 20px;
+.card-front-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 10px 25px rgba(255, 133, 162, 0.1);
-  border: 2px solid transparent;
+  gap: 20px;
 }
 
-.kitty-card-premium:active {
-  border-color: var(--primary);
-  background: #fff5f7;
+.card-front-text {
+  font-family: var(--font-accent);
+  font-size: 1.8rem;
+  line-height: 1.3;
 }
 
-/* Modal */
-.modal-full {
-  position: fixed;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.95);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  padding: 30px;
-}
-
-.message-box {
+/* UI Overlay */
+.header {
+  margin-bottom: 50px;
   text-align: center;
-  max-width: 350px;
+  z-index: 10;
 }
 
-.message-text-big {
-  font-family: 'Dancing Script', cursive;
-  font-size: 2.2rem;
-  color: var(--primary);
-  margin: 30px 0;
+.header h1 {
+  font-family: var(--font-accent);
+  font-size: 3rem;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.instruction {
+  margin-top: 50px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  opacity: 0.8;
+  z-index: 10;
+}
+
+/* Animations */
+.sparkle {
+  position: absolute;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.button-reset {
+  margin-top: 30px;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.4);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+  font-weight: 500;
 }
