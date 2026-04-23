@@ -80,10 +80,10 @@ const App = () => {
                   opacity: 0
                 }}
                 animate={{ 
-                  rotate: isThisSelected ? (isFlipped ? 90 : 0) : (i - 2) * 12,
+                  rotate: isThisSelected ? 0 : (i - 2) * 12,
                   x: isThisSelected ? 0 : (i - 2) * 35,
                   y: isThisSelected ? 0 : Math.abs(i - 2) * 10,
-                  scale: isThisSelected ? (isFlipped ? 1.6 : 1.3) : 1,
+                  scale: isThisSelected ? (isFlipped ? 2.2 : 1.3) : 1,
                   opacity: 1,
                   rotateY: isThisSelected && isFlipped ? 180 : 0
                 }}
