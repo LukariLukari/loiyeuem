@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Heart, Stars, RotateCcw } from 'lucide-react';
+import { Heart, RotateCcw, Sparkles } from 'lucide-react';
 
 const App = () => {
   const [selectedCard, setSelectedCard] = useState(null);
@@ -22,10 +22,10 @@ const App = () => {
     setTimeout(() => {
       setIsFlipped(true);
       confetti({
-        particleCount: 120,
-        spread: 70,
+        particleCount: 150,
+        spread: 80,
         origin: { y: 0.6 },
-        colors: ['#ff85a2', '#ffffff', '#bc7c86']
+        colors: ['#ff85a2', '#ffffff', '#8b3d4a', '#d4af37']
       });
     }, 600);
   };
@@ -55,7 +55,6 @@ const App = () => {
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          style={{ fontFamily: 'Dancing Script' }}
         >
           Bốc Bài Hello Kitty ❤️
         </motion.h1>
@@ -77,13 +76,13 @@ const App = () => {
                 initial={{ 
                   rotate: (i - 2) * 12, 
                   x: (i - 2) * 35,
-                  y: Math.abs(i - 2) * 8,
+                  y: Math.abs(i - 2) * 10,
                   opacity: 0
                 }}
                 animate={{ 
                   rotate: isThisSelected ? 0 : (i - 2) * 12,
                   x: isThisSelected ? 0 : (i - 2) * 35,
-                  y: isThisSelected ? 0 : Math.abs(i - 2) * 8,
+                  y: isThisSelected ? 0 : Math.abs(i - 2) * 10,
                   scale: isThisSelected ? 1.3 : 1,
                   opacity: 1,
                   rotateY: isThisSelected && isFlipped ? 180 : 0
@@ -91,18 +90,19 @@ const App = () => {
                 exit={{ opacity: 0, scale: 0.5 }}
                 onClick={() => handleCardClick(i)}
                 whileHover={!isAnySelected ? { y: -20, scale: 1.05 } : {}}
+                transition={{ type: "spring", stiffness: 100, damping: 15 }}
               >
-                {/* Back Face - Hello Kitty Design */}
+                {/* Back Face - User's exact Hello Kitty image */}
                 <div className="card-face card-back" />
                 
                 {/* Front Face - Message */}
                 <div className="card-face card-front">
-                  <div className="card-front-content">
-                    <Heart size={32} color="#ff85a2" fill="#ff85a2" />
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+                    <Heart size={40} color="#ff85a2" fill="#ff85a2" />
                     <p className="card-front-text">
                       {cardMessages[i]}
                     </p>
-                    <Stars color="#ffca28" fill="#ffca28" size={24} />
+                    <Sparkles color="#d4af37" size={24} />
                   </div>
                 </div>
               </motion.div>
@@ -129,12 +129,12 @@ const App = () => {
           onClick={reset}
         >
           <RotateCcw size={18} />
-          Bốc lá khác nhé
+          BỐC LẠI NHÉ
         </motion.button>
       )}
 
-      {/* Floating Hearts */}
-      {[...Array(12)].map((_, i) => (
+      {/* Floating Sparkles */}
+      {[...Array(10)].map((_, i) => (
         <motion.div
           key={i}
           className="sparkle"
@@ -153,7 +153,7 @@ const App = () => {
             delay: Math.random() * 5
           }}
         >
-          <Heart size={Math.random() * 12 + 8} fill="white" opacity={0.2} />
+          <Heart size={12} fill="white" opacity={0.2} />
         </motion.div>
       ))}
     </div>
