@@ -61,7 +61,7 @@ const App = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
           >
-            Mỗi lá bài là lời từ trái tim anh
+            Mỗi lá bài chất chứa lời nói từ trái tim anh
           </motion.h1>
         </header>
 
@@ -143,7 +143,7 @@ const App = () => {
             >
               <button className="btn-reset" onClick={reset}>
                 <RotateCcw size={20} />
-                BỐC LẠI NHÉ
+                BỐC TIẾP NHÉ
               </button>
             </motion.div>
           </motion.div>
