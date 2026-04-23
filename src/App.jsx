@@ -17,9 +17,9 @@ const App = () => {
 
   const handleCardClick = (index) => {
     if (selectedCard !== null) return;
-    
+
     setSelectedCard(index);
-    
+
     // Confetti effect
     confetti({
       particleCount: 150,
@@ -44,8 +44,8 @@ const App = () => {
       {/* Background Decorative Layer */}
       <div className="bg-layer">
         {[...Array(10)].map((_, i) => (
-          <motion.div 
-            key={i} 
+          <motion.div
+            key={i}
             className="bg-text-line"
             animate={{ x: i % 2 === 0 ? [-100, 100] : [100, -100] }}
             transition={{ duration: 25, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
@@ -61,7 +61,7 @@ const App = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
           >
-            Bốc Bài Hello Kitty ❤️
+            Mỗi lá bài là lời từ trái tim anh
           </motion.h1>
         </header>
 
@@ -71,13 +71,13 @@ const App = () => {
               <motion.div
                 key={i}
                 className="card-item"
-                initial={{ 
-                  rotate: (i - 2) * 12, 
+                initial={{
+                  rotate: (i - 2) * 12,
                   x: (i - 2) * 25,
                   y: Math.abs(i - 2) * 10,
                   opacity: 0
                 }}
-                animate={{ 
+                animate={{
                   rotate: selectedCard === i ? 0 : (i - 2) * 12,
                   x: selectedCard === i ? 0 : (i - 2) * 25,
                   y: selectedCard === i ? -40 : Math.abs(i - 2) * 10,
@@ -96,7 +96,7 @@ const App = () => {
         </main>
 
         {!selectedCard && (
-          <motion.footer 
+          <motion.footer
             className="instruction"
             animate={{ opacity: [0.3, 1, 0.3] }}
             transition={{ repeat: Infinity, duration: 2.5 }}
@@ -109,13 +109,13 @@ const App = () => {
       {/* Full Screen Result Overlay */}
       <AnimatePresence>
         {showResult && (
-          <motion.div 
+          <motion.div
             className="modal-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <motion.div 
+            <motion.div
               className="modal-content"
               initial={{ scale: 0.9, opacity: 0, y: 30 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -124,18 +124,18 @@ const App = () => {
               <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '5px' }}>
                 <Heart size={28} color="#ff85a2" fill="#ff85a2" />
               </div>
-              
+
               <div className="message-scroll">
                 {cardMessages[selectedCard]}
               </div>
-              
+
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Sparkles color="#d4af37" size={20} />
               </div>
             </motion.div>
 
             {/* Global Reset Button - Outside the card */}
-            <motion.div 
+            <motion.div
               className="reset-btn-container"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
